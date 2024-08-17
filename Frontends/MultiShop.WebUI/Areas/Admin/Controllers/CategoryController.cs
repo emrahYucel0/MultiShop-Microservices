@@ -35,8 +35,6 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
                 return View(values);
             }
 
-           
-
             return View();
         }
 
