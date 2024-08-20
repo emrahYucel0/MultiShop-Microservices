@@ -15,7 +15,6 @@
                             <tr>
                                 <th>#</th>
                                 <th>Kategori Adı</th>
-                                <th>Kategoriye Ait Ürünler</th>
                                 <th>Sil</th>
                                 <th>Güncelle</th>
                             </tr>
@@ -27,7 +26,6 @@
                                 <tr>
                                     <th scope="row">@count</th>
                                     <td>@item.CategoryName</td>
-                                    <td><a href="#" class="btn btn-warning">Ürünler</a></td>
                                     <td><button type="button" class="btn btn-danger" onclick="showDeleteConfirmation('/Admin/Category/DeleteCategory/@item.CategoryId')">Sil</button></td>
                                     <td><a href="/Admin/Category/UpdateCategory/@item.CategoryId" class="btn btn-success">Güncelle</a></td>
                                 </tr>
