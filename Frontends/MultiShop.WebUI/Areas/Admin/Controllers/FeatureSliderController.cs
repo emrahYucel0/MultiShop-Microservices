@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MultiShop.DtoLayer.CatalogDtos.FeatureSliderDtos;
 using Newtonsoft.Json;
+using NToastNotify;
 using System.Text;
 
 namespace MultiShop.WebUI.Areas.Admin.Controllers
@@ -10,10 +11,11 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
     public class FeatureSliderController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;
-
-        public FeatureSliderController(IHttpClientFactory httpClientFactory)
+        private readonly IToastNotification _toastNotification;
+        public FeatureSliderController(IHttpClientFactory httpClientFactory, IToastNotification toastNotification)
         {
             _httpClientFactory = httpClientFactory;
+            _toastNotification = toastNotification;
         }
 
         [Route("Index")]
@@ -58,6 +60,8 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
             var responseMessage = await client.PostAsync("https://localhost:7070/api/FeatureSliders", stringContent);
             if (responseMessage.IsSuccessStatusCode)
             {
+                _toastNotification.AddInfoToastMessage("Öne Çıkan Görsel Eklendi");
+
                 return RedirectToAction("Index", "FeatureSlider", new { area = "Admin" });
             }
             return View();
@@ -70,6 +74,8 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
             var responseMessage = await client.DeleteAsync("https://localhost:7070/api/FeatureSliders?id=" + id);
             if (responseMessage.IsSuccessStatusCode)
             {
+                _toastNotification.AddErrorToastMessage("Öne Çıkan Görsel Silindi");
+
                 return RedirectToAction("Index", "FeatureSlider", new { area = "Admin" });
             }
             return View();
@@ -105,6 +111,8 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
             var responseMessage = await client.PutAsync("https://localhost:7070/api/FeatureSliders/", stringContent);
             if (responseMessage.IsSuccessStatusCode)
             {
+                _toastNotification.AddSuccessToastMessage("Öne Çıkan Görsel Güncellendi");
+
                 return RedirectToAction("Index", "FeatureSlider", new { area = "Admin" });
             }
             return View();

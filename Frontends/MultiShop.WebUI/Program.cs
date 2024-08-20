@@ -1,10 +1,17 @@
+
+using NToastNotify;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews().AddNToastNotifyNoty(new NotyOptions
+{
+    ProgressBar = true,
+    Timeout = 5000,
+    Theme = "mint"
+});
 
 builder.Services.AddHttpClient();
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -23,8 +30,11 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapControllerRoute(
+
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.UseNToastNotify();
 
 app.UseEndpoints(endpoints =>
 {
@@ -33,5 +43,6 @@ app.UseEndpoints(endpoints =>
       pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
     );
 });
+
 
 app.Run();

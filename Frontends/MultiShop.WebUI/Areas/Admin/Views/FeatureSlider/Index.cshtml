@@ -28,7 +28,7 @@
                                 <tr>
                                     <th scope="row">@count</th>
                                     <td>@item.Title</td>
-                                    <td><a href="/Admin/FeatureSlider/DeleteFeatureSlider/@item.FeatureSliderId" class="btn btn-danger">Sil</a></td>
+                                    <td><button type="button" class="btn btn-danger" onclick="showDeleteConfirmation('/Admin/FeatureSlider/DeleteFeatureSlider/@item.FeatureSliderId')">Sil</button></td>
                                     <td><a href="/Admin/FeatureSlider/UpdateFeatureSlider/@item.FeatureSliderId" class="btn btn-success">Güncelle</a></td>
                                 </tr>
                             }

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using MultiShop.DtoLayer.CatalogDtos.CategoryDtos;
 using MultiShop.DtoLayer.CatalogDtos.ProductDtos;
 using Newtonsoft.Json;
+using NToastNotify;
 using System.Text;
 
 namespace MultiShop.WebUI.Areas.Admin.Controllers
@@ -14,10 +15,12 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
     public class ProductController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;
+        private readonly IToastNotification _toastNotification;
 
-        public ProductController(IHttpClientFactory httpClientFactory)
+        public ProductController(IHttpClientFactory httpClientFactory, IToastNotification toastNotification)
         {
             _httpClientFactory = httpClientFactory;
+            _toastNotification = toastNotification;
         }
 
         [Route("Index")]
@@ -73,6 +76,8 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
             var responseMessage = await client.PostAsync("https://localhost:7070/api/Products", stringContent);
             if (responseMessage.IsSuccessStatusCode)
             {
+                _toastNotification.AddInfoToastMessage("Ürün Eklendi");
+
                 return RedirectToAction("Index", "Product", new { area = "Admin" });
             }
             return View();
@@ -85,6 +90,8 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
             var responseMessage = await client.DeleteAsync("https://localhost:7070/api/Products?id=" + id);
             if (responseMessage.IsSuccessStatusCode)
             {
+                _toastNotification.AddErrorToastMessage("Ürün Silindi");
+
                 return RedirectToAction("Index", "Product", new { area = "Admin" });
             }
             return View();
@@ -132,6 +139,8 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
             var responseMessage = await client.PutAsync("https://localhost:7070/api/Products/", stringContent);
             if (responseMessage.IsSuccessStatusCode)
             {
+                _toastNotification.AddSuccessToastMessage("Ürün Güncellendi");
+
                 return RedirectToAction("Index", "Product", new { area = "Admin" });
             }
             return View();
