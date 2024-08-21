@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using MultiShop.DtoLayer.CatalogDtos.OfferDiscountDtos;
 using Newtonsoft.Json;
 using NToastNotify;
@@ -7,7 +6,7 @@ using System.Text;
 
 namespace MultiShop.WebUI.Areas.Admin.Controllers;
 
-    [Area("Admin")]
+[Area("Admin")]
     [Route("Admin/OfferDiscount")]
     public class OfferDiscountController : Controller
     {

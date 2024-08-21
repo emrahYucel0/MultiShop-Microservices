@@ -8,45 +8,45 @@ namespace MultiShop.Catalog.Controllers
     [ApiController]
     public class BrandsController : ControllerBase
     {
-        private readonly IBrandService _BrandService;
+        private readonly IBrandService _brandService;
 
         public BrandsController(IBrandService BrandService)
         {
-            _BrandService = BrandService;
+            _brandService = BrandService;
         }
 
         [HttpGet]
         public async Task<IActionResult> BrandList()
         {
-            var values = await _BrandService.GetAllBrandAsync();
+            var values = await _brandService.GetAllBrandAsync();
             return Ok(values);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetBrandById(string id)
         {
-            var values = await _BrandService.GetByIdBrandAsync(id);
+            var values = await _brandService.GetByIdBrandAsync(id);
             return Ok(values);
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateBrand(CreateBrandDto createBrandDto)
         {
-            await _BrandService.CreateBrandAsync(createBrandDto);
+            await _brandService.CreateBrandAsync(createBrandDto);
             return Ok("Marka başarıyla eklendi.");
         }
 
         [HttpDelete]
         public async Task<IActionResult> DeleteBrand(string id)
         {
-            await _BrandService.DeleteBrandAsync(id);
+            await _brandService.DeleteBrandAsync(id);
             return Ok("Marka başaruıyla silindi.");
         }
 
         [HttpPut]
         public async Task<IActionResult> UpdateBrand(UpdateBrandDto updateBrandDto)
         {
-            await _BrandService.UpdateBrandAsync(updateBrandDto);
+            await _brandService.UpdateBrandAsync(updateBrandDto);
             return Ok("Marka başarıyla güncellendi.");
         }
     }

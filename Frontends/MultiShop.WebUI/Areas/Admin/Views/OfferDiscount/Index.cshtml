@@ -3,6 +3,12 @@
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+
+    int count = 0;
+
+    bool isDisabled = Model.Count >= 2;
+    string disabledAttribute = isDisabled ? "disabled" : "";
+    string isWorking = isDisabled ? "#" : "CreateDiscountOffer";
 }
 
 <section class="content container-fluid">
@@ -14,6 +20,7 @@
                     <table class="table table-bordered">
                         <thead>
                             <tr>
+                                <th>#</th>
                                 <th>İndirim Teklif Başlığı</th>
                                 <th>İndirim Teklif Alt Başlığı</th>
                                 <th>Sil</th>
@@ -23,7 +30,9 @@
                         <tbody>
                             @foreach (var item in Model)
                             {
+                                count++;
                                 <tr>
+                                    <th scope="row">@count</th>
                                     <td>@item.Title</td>
                                     <td>@item.SubTitle</td>
                                     <td><button type="button" class="btn btn-danger" onclick="showDeleteConfirmation('/Admin/OfferDiscount/DeleteOfferDiscount/@item.OfferDiscountId')">Sil</button></td>
@@ -32,7 +41,7 @@
                             }
                         </tbody>
                     </table>
-                    <a href="/Admin/OfferDiscount/CreateOfferDiscount/" class="btn btn-primary">Yeni İndirim Teklifi Girişi</a>
+                    <a href="/Admin/OfferDiscount/CreateOfferDiscount/" class="btn btn-primary" Title="2 adet indirim teklifi bulunmalı" "@isWorking" @disabledAttribute>Yeni İndirim Teklifi Girişi</a>
                 </div>
             </div>
         </div>

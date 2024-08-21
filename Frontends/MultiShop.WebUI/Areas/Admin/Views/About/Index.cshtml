@@ -1,18 +1,13 @@
-﻿@model List<ResultSpecialOfferDto>
+﻿@model List<ResultAboutDto>
+
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
-
     int count = 0;
-
-    bool isDisabled = Model.Count >= 2;
-    string disabledAttribute = isDisabled ? "disabled" : "";
-    string isWorking = isDisabled ? "#" : "CreateDiscountOffer";
 }
 
 <section class="content container-fluid">
     <div class="row">
-
         <div class="col-md-12">
             <div class="chart-box">
                 <div class="bs-example" data-example-id="bordered-table">
@@ -20,8 +15,10 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Teklif Başlığı</th>
-                                <th>Teklif Alt Başlığı</th>
+                                <th>Açıklama</th>
+                                <th>Adres</th>
+                                <th>Email</th>
+                                <th>Telefon</th>
                                 <th>Sil</th>
                                 <th>Güncelle</th>
                             </tr>
@@ -32,22 +29,19 @@
                                 count++;
                                 <tr>
                                     <th scope="row">@count</th>
-                                    <td>@item.Title</td>
-                                    <td>@item.Subtitle</td>
-                                    <td><button type="button" class="btn btn-danger" onclick="showDeleteConfirmation('/Admin/SpecialOffer/DeleteSpecialOffer/@item.SpecialOfferId')">Sil</button></td>
-                                    <td><a href="/Admin/SpecialOffer/UpdateSpecialOffer/@item.SpecialOfferId" class="btn btn-success">Güncelle</a></td>
+                                    <td>@item.Description</td>
+                                    <td>@item.Address</td>
+                                    <td>@item.Email</td>
+                                    <td>@item.Phone</td>
+                                    <td><button type="button" class="btn btn-danger" onclick="showDeleteConfirmation('/Admin/About/DeleteAbout/@item.AboutId')">Sil</button></td>
+                                    <td><a href="/Admin/About/UpdateAbout/@item.AboutId" class="btn btn-success">Güncelle</a></td>
                                 </tr>
                             }
                         </tbody>
                     </table>
-                    <a href="/Admin/SpecialOffer/CreateSpecialOffer/" class="btn btn-primary" Title="2 adet özel teklif bulunmalı" "@isWorking" @disabledAttribute >Yeni Teklif Girişi</a>
+                    <a href="/Admin/About/CreateAbout" class="btn btn-primary">Yeni Hakkımızda Alanı Girişi</a>
                 </div>
             </div>
         </div>
     </div>
 </section>
-
-
-
-
-

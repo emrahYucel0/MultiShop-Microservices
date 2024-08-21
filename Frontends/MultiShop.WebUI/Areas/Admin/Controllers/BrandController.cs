@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using MultiShop.DtoLayer.CatalogDtos.BrandDtos;
 using Newtonsoft.Json;
 using NToastNotify;
@@ -25,7 +24,7 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
         {
             ViewBag.t = "Marka İşlemleri";
             ViewBag.v1 = "Anasayfa";
-            ViewBag.v2 = "Markaler";
+            ViewBag.v2 = "Markalar";
             ViewBag.v3 = "Marka Listesi";
 
             var client = _httpClientFactory.CreateClient();
@@ -46,7 +45,7 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
         {
             ViewBag.t = "Marka İşlemleri";
             ViewBag.v1 = "Anasayfa";
-            ViewBag.v2 = "Markaler";
+            ViewBag.v2 = "Markalar";
             ViewBag.v3 = "Yeni Marka Girişi";
             return View();
         }
@@ -88,7 +87,7 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
         {
             ViewBag.t = "Marka İşlemleri";
             ViewBag.v1 = "Anasayfa";
-            ViewBag.v2 = "Markaler";
+            ViewBag.v2 = "Markalar";
             ViewBag.v3 = "Marka Güncelleme Sayfası";
 
             var client = _httpClientFactory.CreateClient();
