@@ -4,14 +4,14 @@
     <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Öne Çıkan Ürünler</span></h2>
     <div class="row px-xl-5">
 
-        @foreach (var item in Model)
+        @foreach (var item in Model.OrderByDescending(x=>x.ProductPrice).Take(8))
         {
             decimal x = ((item.ProductPrice / 100) * 15) + item.ProductPrice;
 
             <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
                 <div class="product-item bg-light mb-4">
                     <div class="product-img position-relative overflow-hidden">
-                        <img class="img-fluid w-100" src="@item.ProductImageUrl" alt="" style="width: 200px; height: 250px; object-fit: fill;">
+                        <img class="img-fluid w-100" src="@item.ProductImageUrl" alt="" style="width: 100px; height: 350px; object-fit: fill;">
                         <div class="product-action">
                             <a class="btn btn-outline-dark btn-square" href="/ShoppingCart/AddBasketItem/@item.ProductId"><i class="fa fa-shopping-cart"></i></a>
                             <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
