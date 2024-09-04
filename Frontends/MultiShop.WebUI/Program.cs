@@ -1,7 +1,11 @@
 
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using MultiShop.WebUI.Handlers;
 using MultiShop.WebUI.Services.Abstracts;
 using MultiShop.WebUI.Services.Concrete;
+using MultiShop.WebUI.Services.Concretes;
+using MultiShop.WebUI.Settings;
 using NToastNotify;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -25,9 +29,40 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddCo
     opt.Cookie.Name = "MultiShopJwt";
 });
 
+
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).
+    AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, opt =>
+    {
+        opt.LoginPath = "/Login/Index/";
+        opt.ExpireTimeSpan = TimeSpan.FromDays(5);
+        opt.Cookie.Name = "MultiShopCookie";
+        opt.SlidingExpiration = true;
+    });
+
+
 builder.Services.AddHttpContextAccessor();
 
+
 builder.Services.AddScoped<ILoginService, LoginService>();
+builder.Services.AddHttpClient<IIdentityService, IdentityService>();
+
+
+builder.Services.Configure<ClientSettings>(builder.Configuration.GetSection("ClientSettings"));
+builder.Services.Configure<ServiceApiSettings>(builder.Configuration.GetSection("ServiceApiSettings"));
+
+
+builder.Services.AddScoped<ResourceOwnerPasswordTokenHandler>();
+
+
+var values = builder.Configuration.GetSection("ServiceApiSettings").Get<ServiceApiSettings>();
+
+
+builder.Services.AddHttpClient<IUserService, UserService>(opt =>
+{
+    opt.BaseAddress = new Uri(values.IdentityServerUrl);
+}).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
+
 
 
 builder.Services.AddHttpClient();
@@ -46,7 +81,9 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+
 app.UseAuthentication();
+
 
 app.UseAuthorization();
 
