@@ -1,4 +1,4 @@
-﻿@model List<ResultProductWithCategoryDto>
+﻿@model List<ResultProductsWithCategoryDto>
 
 @{
     ViewData["Title"] = "ProductListWithCategory";
@@ -32,7 +32,7 @@
                                     <th scope="row">@count</th>
                                     <td>@item.ProductName</td>
                                     <td>@item.ProductPrice</td>
-                                    <td>@item.Category.CategoryName</td>
+                                    <td>@(item.Category != null ? item.Category.CategoryName : "Kategori yok")</td>
                                     <td><a href="/Admin/Product/DeleteProduct/@item.ProductId" class="btn btn-danger">Sil</a></td>
                                     <td><a href="/Admin/Product/UpdateProduct/@item.ProductId" class="btn btn-success">Güncelle</a></td>
                                     <td><a href="/Admin/ProductImage/ProductImageDetail/@item.ProductId" class="btn btn-info">Ürün Görselleri</a></td>

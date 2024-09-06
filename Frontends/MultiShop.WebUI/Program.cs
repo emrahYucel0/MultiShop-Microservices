@@ -1,6 +1,4 @@
-
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+using MultiShop.WebUI.Extentions;
 using MultiShop.WebUI.Handlers;
 using MultiShop.WebUI.Services.Abstracts;
 using MultiShop.WebUI.Services.Concrete;
@@ -18,27 +16,7 @@ builder.Services.AddControllersWithViews().AddNToastNotifyNoty(new NotyOptions
     Theme = "mint"
 });
 
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddCookie(JwtBearerDefaults.AuthenticationScheme, opt =>
-{
-    opt.LoginPath = "/Login/Index/";
-    opt.LogoutPath = "/Login/LogOut/";
-    opt.AccessDeniedPath = "/Pages/AccessDenied/";
-    opt.Cookie.HttpOnly = true;
-    opt.Cookie.SameSite = SameSiteMode.Strict;
-    opt.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
-    opt.Cookie.Name = "MultiShopJwt";
-});
-
-
-
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).
-    AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, opt =>
-    {
-        opt.LoginPath = "/Login/Index/";
-        opt.ExpireTimeSpan = TimeSpan.FromDays(5);
-        opt.Cookie.Name = "MultiShopCookie";
-        opt.SlidingExpiration = true;
-    });
+builder.Services.AddAuthenticationServices(builder.Configuration);
 
 
 builder.Services.AddHttpContextAccessor();
@@ -52,7 +30,8 @@ builder.Services.Configure<ClientSettings>(builder.Configuration.GetSection("Cli
 builder.Services.Configure<ServiceApiSettings>(builder.Configuration.GetSection("ServiceApiSettings"));
 
 
-builder.Services.AddScoped<ResourceOwnerPasswordTokenHandler>();
+builder.Services.AddTokenHandlers();
+
 
 
 var values = builder.Configuration.GetSection("ServiceApiSettings").Get<ServiceApiSettings>();
@@ -62,6 +41,10 @@ builder.Services.AddHttpClient<IUserService, UserService>(opt =>
 {
     opt.BaseAddress = new Uri(values.IdentityServerUrl);
 }).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
+
+
+builder.Services.AddCatalogServices(builder.Configuration);
+builder.Services.AddCommentServices(builder.Configuration);
 
 
 
