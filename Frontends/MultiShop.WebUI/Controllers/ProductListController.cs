@@ -14,12 +14,18 @@ namespace MultiShop.WebUI.Controllers
         }
         public IActionResult Index(string id)
         {
+            ViewBag.directory1 = "Ana Sayfa";
+            ViewBag.directory2 = "Ürünler";
+            ViewBag.directory3 = "Ürün Listesi";
             ViewBag.i = id;
             return View();
         }
 
         public IActionResult ProductDetail(string id)
         {
+            ViewBag.directory1 = "Ana Sayfa";
+            ViewBag.directory2 = "Ürün Listesi";
+            ViewBag.directory3 = "Ürün Detayları";
             ViewBag.x = id;
             return View();
         }
@@ -40,7 +46,7 @@ namespace MultiShop.WebUI.Controllers
             var client = _httpClientFactory.CreateClient();
             var jsonData = JsonConvert.SerializeObject(createUserCommentDto);
             StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
-            var responseMessage = await client.PostAsync("https://localhost:7283/api/Comments", stringContent);
+            var responseMessage = await client.PostAsync("http://localhost:7075/api/Comments", stringContent);
 
             if (responseMessage.IsSuccessStatusCode)
             {

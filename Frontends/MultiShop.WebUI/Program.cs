@@ -1,6 +1,7 @@
 using MultiShop.WebUI.Extentions;
 using MultiShop.WebUI.Handlers;
 using MultiShop.WebUI.Services.Abstracts;
+using MultiShop.WebUI.Services.CatalogServices.ProductServices;
 using MultiShop.WebUI.Services.Concrete;
 using MultiShop.WebUI.Services.Concretes;
 using MultiShop.WebUI.Settings;
@@ -32,8 +33,6 @@ builder.Services.Configure<ServiceApiSettings>(builder.Configuration.GetSection(
 
 builder.Services.AddTokenHandlers();
 
-
-
 var values = builder.Configuration.GetSection("ServiceApiSettings").Get<ServiceApiSettings>();
 
 
@@ -41,6 +40,7 @@ builder.Services.AddHttpClient<IUserService, UserService>(opt =>
 {
     opt.BaseAddress = new Uri(values.IdentityServerUrl);
 }).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
+
 
 
 builder.Services.AddCatalogServices(builder.Configuration);

@@ -1,28 +1,19 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MultiShop.DtoLayer.CatalogDtos.OfferDiscountDtos;
-using Newtonsoft.Json;
+using MultiShop.WebUI.Services.CatalogServices.OfferDiscountServices;
 
-namespace MultiShop.WebUI.ViewComponents.DefaultViewComponents;
-
-public class _OfferDiscountDefaultComponentPartial : ViewComponent
+namespace MultiShop.WebUI.ViewComponents.DefaultViewComponents
 {
-    private readonly IHttpClientFactory _httpClientFactory;
-
-    public _OfferDiscountDefaultComponentPartial(IHttpClientFactory httpClientFactory)
+    public class _OfferDiscountDefaultComponentPartial : ViewComponent
     {
-        _httpClientFactory = httpClientFactory;
-    }
-
-    public async Task<IViewComponentResult>InvokeAsync()
-    {
-        var client = _httpClientFactory.CreateClient();
-        var responseMessage = await client.GetAsync("https://localhost:7070/api/OfferDiscounts");
-        if (responseMessage.IsSuccessStatusCode)
+        private readonly IOfferDiscountService _offerDiscountService;
+        public _OfferDiscountDefaultComponentPartial(IOfferDiscountService offerDiscountService)
         {
-            var jsonData = await responseMessage.Content.ReadAsStringAsync();
-            var values = JsonConvert.DeserializeObject<List<ResultOfferDiscountDto>>(jsonData);
+            _offerDiscountService = offerDiscountService;
+        }
+        public async Task<IViewComponentResult> InvokeAsync()
+        {
+            var values = await _offerDiscountService.GetAllOfferDiscountAsync();
             return View(values);
         }
-        return View();
     }
 }
